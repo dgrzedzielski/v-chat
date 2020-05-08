@@ -1,0 +1,12 @@
+@import 'scss/lib';
+
+.base-form {
+  position: relative;
+  padding-bottom: spacing(5);
+
+  &__error {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+  }
+}

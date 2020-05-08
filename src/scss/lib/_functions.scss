@@ -1,0 +1,25 @@
+@function pixelize($val) {
+  @if ($val > 0) {
+    @return #{$val}px;
+  }
+
+  @return $val;
+}
+
+@function spacing($val, $val2: null, $val3: null, $val4: null) {
+  $result: pixelize($val * $spacer);
+
+  @if $val2 {
+    $result: $result + ' ' + pixelize($val2 * $spacer);
+  }
+
+  @if $val3 {
+    $result: $result + ' ' + pixelize($val3 * $spacer);
+  }
+
+  @if $val4 {
+    $result: $result + ' ' + pixelize($val4 * $spacer);
+  }
+
+  @return $result;
+}

@@ -13,7 +13,7 @@ type AuthProviderProps = {
 
 const defaultValue: AuthContextProps = {
   user: null,
-  isReady: false
+  isReady: false,
 };
 
 const AuthContext = React.createContext<AuthContextProps>(defaultValue);
@@ -23,23 +23,19 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [user, setUser] = React.useState<User | null>(defaultValue.user);
   const [isReady, setIsReady] = React.useState<boolean>(defaultValue.isReady);
 
-  React.useLayoutEffect(() => {
-    firebaseAuth.onAuthStateChanged(newUser => {
+  React.useEffect(() => {
+    firebaseAuth.onAuthStateChanged((newUser) => {
       setUser(newUser);
       setIsReady(true);
     });
   }, []);
 
-  const value = React.useMemo<AuthContextProps>(
-    () => ({ user, isReady }),
-    [user, isReady]
-  );
+  const value = React.useMemo<AuthContextProps>(() => ({ user, isReady }), [
+    user,
+    isReady,
+  ]);
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

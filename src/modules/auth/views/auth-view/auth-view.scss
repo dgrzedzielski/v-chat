@@ -1,0 +1,29 @@
+@import 'scss/lib';
+
+.auth-view {
+  &__image-container {
+    @include flex-center;
+    padding: spacing(8);
+  }
+
+  &__icon-container {
+    margin: spacing(2);
+    background: var(--secondary);
+    color: var(--text-primary);
+  }
+
+  &__form-container {
+    margin: spacing(8, 4);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    @include mq(lg) {
+      margin: spacing(8);
+    }
+  }
+
+  &__submit {
+    margin: spacing(3, 0, 2);
+  }
+}
