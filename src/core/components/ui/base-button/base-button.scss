@@ -1,0 +1,15 @@
+@import 'scss/lib';
+
+.btn {
+  position: relative;
+
+  &__loader-container {
+    @include absolute(50%, 50%);
+    transform: translate(-50%, -50%);
+    line-height: 0;
+  }
+
+  &__loader-container + &__content {
+    opacity: 0;
+  }
+}
