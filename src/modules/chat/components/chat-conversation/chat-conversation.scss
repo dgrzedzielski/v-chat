@@ -1,0 +1,36 @@
+@import 'scss/lib';
+
+.chat-conversation {
+  --chat-color: var(--secondary);
+  --conversation-height: 100vh - var(--toolbar-min-height) - #{spacing(6)};
+
+  height: calc(var(--conversation-height));
+  position: relative;
+
+  &__header,
+  &__content {
+    padding: spacing(3);
+  }
+
+  &__content {
+    padding-bottom: spacing(12);
+  }
+
+  &__messages-list {
+    padding: 0;
+  }
+
+  &__messages-list-container {
+    max-height: calc(var(--conversation-height) - 200px);
+    overflow-y: auto;
+    padding-right: spacing(2);
+  }
+
+  &__form-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: spacing(3);
+  }
+}

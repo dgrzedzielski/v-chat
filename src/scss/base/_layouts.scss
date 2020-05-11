@@ -1,0 +1,20 @@
+@import 'scss/lib';
+
+.layout {
+  &, &__content {
+    height: 100%;
+  }
+
+  &__content {
+    flex-grow: 1;
+    padding: spacing(3);
+  }
+
+  &__toolbar {
+    min-height: var(--toolbar-min-height);
+  }
+
+  &--with-drawer {
+    display: flex;
+  }
+}

@@ -1,0 +1,13 @@
+@import 'scss/lib';
+
+.app-drawer {
+  @include mq(md) {
+    width: var(--drawer-width);
+    flex-shrink: 0;
+  }
+
+  &__paper {
+    width: var(--drawer-width);
+    border: none;
+  }
+}

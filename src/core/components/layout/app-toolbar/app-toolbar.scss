@@ -1,0 +1,16 @@
+@import 'scss/lib';
+
+.app-toolbar {
+  @include mq(md) {
+    width: calc(100% - var(--drawer-width));
+    margin-left: var(--drawer-width);
+  }
+
+  &__toggle-drawer {
+    margin-right: spacing(2);
+
+    @include mq(md) {
+      display: none;
+    }
+  }
+}

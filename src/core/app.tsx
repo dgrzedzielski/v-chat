@@ -1,17 +1,23 @@
 import React from 'react';
 import { useAuth } from 'modules/auth/auth-context';
+import FullScreenLoader from 'core/components/ui/full-screen-loader';
+import DelayedFullScreenLoader from './components/ui/delayed-full-screen-loader';
 
-const AuthenticatedApp = React.lazy(() => import('./authenticated-app'));
+const AuthenticatedApp = React.lazy(
+  /* webpackPrefetch: true */ () => import('./authenticated-app')
+);
 const UnauthenticatedApp = React.lazy(() => import('./unauthenticated-app'));
 
-export const App = () => {
+const App = () => {
   const { isReady, user } = useAuth();
 
-  if (!isReady) return <div>Loading...</div>;
+  if (!isReady) return <FullScreenLoader />;
 
   return (
-    <React.Suspense fallback={<div>Loading...</div>}>
+    <React.Suspense fallback={<DelayedFullScreenLoader debounce={50} />}>
       {user ? <AuthenticatedApp /> : <UnauthenticatedApp />}
     </React.Suspense>
   );
 };
+
+export default App;

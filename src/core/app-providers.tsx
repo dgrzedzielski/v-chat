@@ -5,7 +5,7 @@ import { AuthProvider } from 'modules/auth/auth-context';
 import defaultTheme from 'themes/default';
 
 type AppProvidersProps = {
-  children: React.ReactChild
+  children: React.ReactChild;
 };
 
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => (

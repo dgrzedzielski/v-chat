@@ -1,0 +1,55 @@
+@import 'scss/lib';
+
+.chat-message {
+  display: flex;
+  position: relative;
+  padding: spacing(0, 0, 2);
+  margin-bottom: spacing(2);
+
+  &--right {
+    flex-direction: row-reverse;
+  }
+
+  &__content {
+    position: relative;
+    background: var(--chat-color);
+    padding: 10px 16px;
+    border-radius: 10px;
+
+    &::before {
+      position: absolute;
+      top: 16px;
+    }
+  }
+
+  &__created-at {
+    position: absolute;
+    top: 42px;
+  }
+
+  &--left &__content {
+    &::before {
+      @include triangle(left, var(--chat-color), 5px);
+      right: 100%;
+    }
+  }
+
+  &--left &__created-at {
+    left: 4px;
+  }
+
+  &--right &__content {
+    &::before {
+      @include triangle(right, var(--chat-color), 5px);
+      left: 100%;
+    }
+  }
+
+  &--right &__avatar {
+    margin-left: auto;
+  }
+
+  &--right &__created-at {
+    right: 4px;
+  }
+}

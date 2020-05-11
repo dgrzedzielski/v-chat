@@ -1,22 +1,23 @@
 import React from 'react';
-import { firebaseAuth } from 'core/firebase';
 import { User } from 'firebase';
+import { firebaseAuth } from 'core/firebase';
+import { Children } from 'core/common-types';
 
-type AuthContextProps = {
+type AuthContextValue = {
   user: User | null;
   isReady: boolean;
 };
 
 type AuthProviderProps = {
-  children: React.ReactChild;
+  children: Children;
 };
 
-const defaultValue: AuthContextProps = {
+const defaultValue: AuthContextValue = {
   user: null,
   isReady: false,
 };
 
-const AuthContext = React.createContext<AuthContextProps>(defaultValue);
+const AuthContext = React.createContext<AuthContextValue>(defaultValue);
 AuthContext.displayName = 'AuthContext';
 
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
@@ -30,7 +31,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     });
   }, []);
 
-  const value = React.useMemo<AuthContextProps>(() => ({ user, isReady }), [
+  const value = React.useMemo<AuthContextValue>(() => ({ user, isReady }), [
     user,
     isReady,
   ]);

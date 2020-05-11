@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import 'core/i18n';
 import * as serviceWorker from 'service-worker';
-import { App } from 'core/app';
+import App from 'core/app';
 import { AppProviders } from 'core/app-providers';
 import 'scss/styles.scss';
 
