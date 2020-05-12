@@ -8,6 +8,8 @@ const theme = createMuiTheme({
     secondary: {
       main: deepPurple.A200,
     },
+    divider: 'rgba(255, 255, 255, 0.1)',
+    contrastThreshold: 5,
   },
 });
 

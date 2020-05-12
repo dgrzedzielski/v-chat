@@ -1,6 +1,6 @@
 import { firebaseAuth, firebaseDb } from 'core/firebase';
 import { DbCollection } from 'core/common-types';
-import { Channel, Message, Sender } from './types';
+import { Channel, Sender } from './types';
 
 class ChatService {
   static channelsCollection = firebaseDb.collection(DbCollection.channels);

@@ -2,8 +2,10 @@ import React from 'react';
 import { Channel } from 'modules/chat/types';
 import Typography from '@material-ui/core/Typography';
 import ListItem from '@material-ui/core/ListItem';
+import Divider from '@material-ui/core/Divider';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
+import './chat-channels.scss';
 
 type ChatChannelsProps = {
   channels: Channel[];
@@ -15,7 +17,10 @@ const ChatChannels: React.FC<ChatChannelsProps> = ({
   changeChannel,
 }) => (
   <>
-    <Typography variant="h6">Channels</Typography>
+    <Typography variant="h6" className="chat-channels__heading">
+      Channels
+    </Typography>
+    <Divider />
     {channels.map((channel) => (
       <ListItem
         button

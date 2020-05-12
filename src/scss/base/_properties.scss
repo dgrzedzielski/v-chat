@@ -2,9 +2,14 @@
   --white: #fff;
   --primary: #03a9f4; //lightBlue
   --secondary: #7c4dff; // deepPurple[A200]
+  --border-color: rgba(255, 255, 255, 0.1);
 
   --text-primary: var(--white);
   --text-secondary: rgba(255, 255, 255, 0.7);
+
+  --scrollbar-track-bg: rgba(0, 0, 0, 0);
+  --scrollbar-thumb-bg: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb-border-color: var(--border-color);
 
   --drawer-width: 250px;
   --toolbar-min-height: 56px;

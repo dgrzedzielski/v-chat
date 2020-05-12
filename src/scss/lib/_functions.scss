@@ -1,5 +1,5 @@
 @function pixelize($val) {
-  @if ($val > 0) {
+  @if ($val != 0) {
     @return #{$val}px;
   }
 

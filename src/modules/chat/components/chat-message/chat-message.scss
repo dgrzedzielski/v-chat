@@ -2,12 +2,11 @@
 
 .chat-message {
   display: flex;
+  align-items: flex-start;
   position: relative;
-  padding: spacing(0, 0, 2);
-  margin-bottom: spacing(2);
 
-  &--right {
-    flex-direction: row-reverse;
+  &__container {
+    padding: spacing(2);
   }
 
   &__content {
@@ -25,6 +24,12 @@
   &__created-at {
     position: absolute;
     top: 42px;
+    opacity: 0;
+    transition: 0.25s opacity;
+  }
+
+  &:hover &__created-at {
+    opacity: 1;
   }
 
   &--left &__content {
@@ -36,6 +41,11 @@
 
   &--left &__created-at {
     left: 4px;
+  }
+
+  &--right {
+    flex-direction: row-reverse;
+    margin-left: auto;
   }
 
   &--right &__content {

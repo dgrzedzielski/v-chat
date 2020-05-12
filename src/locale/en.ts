@@ -12,4 +12,9 @@ export default {
     email: 'Email address',
     password: 'Password',
   },
+
+  chat: {
+    noMessages: `There's no messages yet. Let's write something`,
+    typeMessage: 'Type your message here...',
+  },
 };

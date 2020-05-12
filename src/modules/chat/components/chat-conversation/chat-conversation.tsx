@@ -4,12 +4,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
 import BaseForm from 'core/components/form/base-form';
+import BaseFormInput from 'core/components/form/base-form-input';
 import { Channel, Message } from 'modules/chat/types';
 import ChatService from 'modules/chat/chat-service';
-import ChatMessage from '../chat-message';
+import ChatMessages from 'modules/chat/components/chat-messages';
 import './chat-conversation.scss';
 
 type ChatConversationProps = {
@@ -21,6 +20,9 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 }) => {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [newMessageContent, setNewMessageContent] = React.useState('');
+  const headerRef = React.useRef<HTMLElement>(null);
+  const containerRef = React.useRef<HTMLElement>(null);
+  const formRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
   const handleMessagesChange = React.useCallback((snapshot) => {
@@ -41,6 +43,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       .doc(currentChannel.name)
       .collection('messages')
       .orderBy('createdAtTimestamp')
+      .limit(100)
       .onSnapshot(handleMessagesChange);
   }, [currentChannel, handleMessagesChange]);
 
@@ -50,19 +53,22 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     return () => unsubscribe();
   }, [subscribeForMessageChanges]);
 
-  const sendMessage = React.useCallback(() => {
+  const sendMessage = React.useCallback(async () => {
+    if (newMessageContent.length === 0) return;
+
     try {
-      ChatService.sendMessage(currentChannel.name, newMessageContent);
+      await ChatService.sendMessage(currentChannel.name, newMessageContent);
     } catch (e) {
-      console.log(e);
+      // TODO HANDLE ERROR
+      // setError(e.message);
     }
     setNewMessageContent('');
   }, [newMessageContent, currentChannel]);
 
   return (
     <>
-      <Card className="chat-conversation">
-        <header className="chat-conversation__header">
+      <Card className="chat-conversation" ref={containerRef}>
+        <header className="chat-conversation__header" ref={headerRef}>
           <Typography variant="h6" component="h3">
             {`#${currentChannel.name}`}
           </Typography>
@@ -77,24 +83,23 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
         </header>
         <Divider />
         <CardContent className="chat-conversation__content">
-          <div className="chat-conversation__messages-list-container">
-            {messages.length === 0 ? (
-              <Typography variant="body1">{t('chat.noMessages')}</Typography>
-            ) : (
-              <List className="chat-conversation__messages-list">
-                {messages.map((message: Message) => (
-                  <ChatMessage message={message} key={message.id} />
-                ))}
-              </List>
-            )}
-          </div>
-          <div className="chat-conversation__form-container">
+          {messages.length === 0 ? (
+            <Typography variant="body1">{t('chat.noMessages')}</Typography>
+          ) : (
+            <ChatMessages messages={messages} />
+          )}
+          <Divider />
+          <div className="chat-conversation__form-container" ref={formRef}>
             <BaseForm onSubmit={sendMessage} withoutErrors>
-              <Input
+              <BaseFormInput
+                autoFocus
+                onChange={setNewMessageContent}
                 value={newMessageContent}
-                onChange={(e) => setNewMessageContent(e.target.value)}
+                name="new-message-input"
+                margin="dense"
                 placeholder={t('chat.typeMessage')}
-                fullWidth
+                className="chat-conversation__input"
+                label=""
               />
             </BaseForm>
           </div>

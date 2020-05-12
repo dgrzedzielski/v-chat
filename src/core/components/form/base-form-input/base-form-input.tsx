@@ -1,6 +1,8 @@
 import React from 'react';
-import TextField from '@material-ui/core/TextField';
 import { TFunctionResult } from 'i18next';
+import { PropTypes } from '@material-ui/core';
+import TextField from '@material-ui/core/TextField';
+import clsx from 'clsx';
 
 type BaseFormInputProps = {
   onChange: (val: any) => void;
@@ -9,7 +11,10 @@ type BaseFormInputProps = {
   label: string | TFunctionResult;
   autoFocus?: boolean;
   required?: boolean;
+  placeholder?: string;
+  margin?: PropTypes.Margin;
   type?: 'text' | 'email' | 'password';
+  className?: string;
 };
 
 const BaseFormInput: React.FC<BaseFormInputProps> = ({
@@ -19,7 +24,10 @@ const BaseFormInput: React.FC<BaseFormInputProps> = ({
   onChange,
   required = false,
   autoFocus = false,
+  className,
   type = 'text',
+  placeholder = '',
+  margin = 'normal',
 }) => {
   const baseOnChange = React.useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -33,7 +41,7 @@ const BaseFormInput: React.FC<BaseFormInputProps> = ({
       value={value}
       onChange={baseOnChange}
       variant="outlined"
-      margin="normal"
+      margin={margin}
       autoComplete="off"
       required={required}
       fullWidth
@@ -42,6 +50,8 @@ const BaseFormInput: React.FC<BaseFormInputProps> = ({
       name={name}
       autoFocus={autoFocus}
       type={type}
+      placeholder={placeholder}
+      className={clsx(className)}
     />
   );
 };

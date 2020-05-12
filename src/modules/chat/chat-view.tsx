@@ -2,8 +2,8 @@ import React from 'react';
 import WithDrawerLayout from 'core/components/layout/with-drawer-layout';
 import { Channel } from './types';
 import ChatService from './chat-service';
-import ChatMessages from './components/chat-conversation';
-import ChatChannels from './components/chat-channels/chat-channels';
+import ChatChannels from './components/chat-channels';
+import ChatConversation from './components/chat-conversation';
 
 const ChatView: React.FC = () => {
   const [channels, setChannels] = React.useState<Channel[]>([]);
@@ -31,7 +31,7 @@ const ChatView: React.FC = () => {
         <ChatChannels channels={channels} changeChannel={setCurrentChannel} />
       }
     >
-      {currentChannel && <ChatMessages currentChannel={currentChannel} />}
+      {currentChannel && <ChatConversation currentChannel={currentChannel} />}
     </WithDrawerLayout>
   );
 };

@@ -16,10 +16,12 @@ import { Message } from 'modules/chat/types';
 type ChatMessageProps = {
   message: Message;
   rightAligned?: boolean;
+  style?: React.CSSProperties;
 };
 
 const ChatMessage: React.FC<ChatMessageProps> = ({
   message: { createdAtTimestamp, content, sender },
+  style,
 }) => {
   const { user } = useAuth();
 
@@ -38,29 +40,34 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
 
   return (
     <>
-      <ListItem
-        className={clsx('chat-message', {
-          'chat-message--left': !isSentByCurrentUser,
-          'chat-message--right': isSentByCurrentUser,
-        })}
-      >
-        <ListItemAvatar>
-          <Avatar src={sender.avatarUrl || ''} className="chat-message__avatar">
-            {sender.displayName.split('')[0]}
-          </Avatar>
-        </ListItemAvatar>
-        <Typography
-          variant="caption"
-          className="chat-message__created-at"
-          color="textSecondary"
+      <ListItem style={style} className="chat-message__container">
+        <div
+          className={clsx('chat-message', {
+            'chat-message--left': !isSentByCurrentUser,
+            'chat-message--right': isSentByCurrentUser,
+          })}
         >
-          <time dateTime={new Date().toLocaleTimeString()}>
-            {formattedCreatedAt}
-          </time>
-        </Typography>
-        <Typography variant="body2" className="chat-message__content">
-          {content}
-        </Typography>
+          <ListItemAvatar>
+            <Avatar
+              src={sender.avatarUrl || ''}
+              className="chat-message__avatar"
+            >
+              {sender.displayName.split('')[0]}
+            </Avatar>
+          </ListItemAvatar>
+          <Typography
+            variant="caption"
+            className="chat-message__created-at"
+            color="textSecondary"
+          >
+            <time dateTime={new Date().toLocaleTimeString()}>
+              {formattedCreatedAt}
+            </time>
+          </Typography>
+          <Typography variant="body2" className="chat-message__content">
+            {content}
+          </Typography>
+        </div>
       </ListItem>
     </>
   );
