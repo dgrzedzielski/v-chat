@@ -57,4 +57,11 @@
   &__no-messages-info {
     padding: spacing(3);
   }
+
+  &__loader-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
 }

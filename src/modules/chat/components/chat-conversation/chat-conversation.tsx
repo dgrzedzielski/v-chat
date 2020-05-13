@@ -4,6 +4,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import BaseForm from 'core/components/form/base-form';
 import BaseFormInput from 'core/components/form/base-form-input';
 import { Channel, Message } from 'modules/chat/types';
@@ -22,6 +23,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 }) => {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [newMessageContent, setNewMessageContent] = React.useState('');
+  const [loading, setLoading] = React.useState(false);
   const { t } = useTranslation();
 
   const handleMessagesChange = React.useCallback((snapshot) => {
@@ -34,6 +36,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       }));
 
     setMessages((currentMessages) => currentMessages.concat(newData));
+    setLoading(false);
   }, []);
 
   const subscribeForMessageChanges = React.useCallback(() => {
@@ -44,6 +47,11 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       .limit(100)
       .onSnapshot(handleMessagesChange);
   }, [currentChannel, handleMessagesChange]);
+
+  React.useEffect(() => {
+    setLoading(true);
+    setMessages([]);
+  }, [currentChannel.name]);
 
   React.useEffect(() => {
     const unsubscribe = subscribeForMessageChanges();
@@ -63,6 +71,29 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     setNewMessageContent('');
   }, [newMessageContent, currentChannel]);
 
+  const conversationContent = React.useMemo(() => {
+    if (loading) {
+      return (
+        <div className="chat-conversation__loader-container">
+          <CircularProgress size={50} color="primary" />
+        </div>
+      );
+    }
+
+    if (messages.length === 0) {
+      return (
+        <Typography
+          variant="body1"
+          className="chat-conversation__no-messages-info"
+        >
+          {t('chat.noMessages')}
+        </Typography>
+      );
+    }
+
+    return <ChatMessages messages={messages} />;
+  }, [messages, loading, t]);
+
   return (
     <>
       <Card className="chat-conversation">
@@ -81,16 +112,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
         </header>
         <Divider />
         <CardContent className="chat-conversation__content">
-          {messages.length === 0 ? (
-            <Typography
-              variant="body1"
-              className="chat-conversation__no-messages-info"
-            >
-              {t('chat.noMessages')}
-            </Typography>
-          ) : (
-            <ChatMessages messages={messages} />
-          )}
+          {conversationContent}
           <div className="chat-conversation__form-container">
             <BaseForm onSubmit={sendMessage} withoutErrors>
               <BaseFormInput
