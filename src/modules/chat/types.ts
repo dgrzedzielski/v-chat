@@ -4,16 +4,21 @@ export interface Sender {
   avatarUrl: string | null;
 }
 
+export interface MessageFormModel {
+  content: string;
+  sender: Sender;
+  createdAtTimestamp: Date;
+}
+
 export interface Message {
   content: string;
   sender: Sender;
   createdAtTimestamp: firebase.firestore.Timestamp;
-  id?: string;
+  id: string;
 }
 
 export interface Channel {
   name: string;
   description: string;
-  users: any[]; // TODO change for proper type
-  messages: Message[];
+  users: string[]; // ids
 }

@@ -1,6 +1,7 @@
 export default {
   common: {
     openDrawer: 'Open drawer',
+    submit: 'Submit',
   },
 
   errors: {
@@ -23,5 +24,10 @@ export default {
   chat: {
     noMessages: `There's no messages yet. Let's write something`,
     typeMessage: 'Type your message here...',
+  },
+
+  settings: {
+    initialProfileSettings: 'Enter your initial profile settings',
+    displayName: 'Display name',
   },
 };

@@ -1,13 +1,14 @@
 import React from 'react';
+import clsx from 'clsx';
 import Typography from '@material-ui/core/Typography';
 import { Children } from 'core/common-types';
 import { useTranslation } from 'react-i18next';
 import './base-form.scss';
-import clsx from 'clsx';
 
 type BaseFormProps = {
   children: Children;
   onSubmit: () => void;
+  className?: string;
   error?: string | null;
   withoutErrors?: boolean;
 };
@@ -15,6 +16,7 @@ type BaseFormProps = {
 const BaseForm: React.FC<BaseFormProps> = ({
   children,
   onSubmit,
+  className,
   withoutErrors = false,
   error = null,
 }) => {
@@ -30,7 +32,7 @@ const BaseForm: React.FC<BaseFormProps> = ({
 
   return (
     <form
-      className={clsx('base-form', {
+      className={clsx('base-form', className, {
         'base-form--without-errors': withoutErrors,
       })}
       onSubmit={baseOnSubmit}

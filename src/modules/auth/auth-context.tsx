@@ -1,11 +1,12 @@
 import React from 'react';
-import { User } from 'firebase';
 import { firebaseAuth } from 'core/firebase';
 import { Children } from 'core/common-types';
+import { User } from './types';
 
 type AuthContextValue = {
   user: User | null;
   isReady: boolean;
+  updateUser: (userData: Partial<User>) => void;
 };
 
 type AuthProviderProps = {
@@ -15,6 +16,7 @@ type AuthProviderProps = {
 const defaultValue: AuthContextValue = {
   user: null,
   isReady: false,
+  updateUser: () => {},
 };
 
 const AuthContext = React.createContext<AuthContextValue>(defaultValue);
@@ -26,15 +28,34 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
 
   React.useEffect(() => {
     firebaseAuth.onAuthStateChanged((newUser) => {
-      setUser(newUser);
+      if (newUser) {
+        setUser({
+          displayName: newUser.displayName,
+          email: newUser.email!,
+          photoURL: newUser.photoURL,
+          uid: newUser.uid,
+        });
+      } else {
+        setUser(null);
+      }
       setIsReady(true);
     });
   }, []);
 
-  const value = React.useMemo<AuthContextValue>(() => ({ user, isReady }), [
-    user,
-    isReady,
-  ]);
+  const updateUser = React.useCallback((newData: Partial<User>) => {
+    setUser((currentUser) => {
+      if (currentUser) {
+        return { ...currentUser, ...newData };
+      }
+
+      return currentUser;
+    });
+  }, []);
+
+  const value = React.useMemo<AuthContextValue>(
+    () => ({ user, isReady, updateUser }),
+    [user, isReady, updateUser]
+  );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

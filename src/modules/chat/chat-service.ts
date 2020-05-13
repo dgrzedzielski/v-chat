@@ -1,6 +1,6 @@
 import { firebaseAuth, firebaseDb } from 'core/firebase';
 import { DbCollection } from 'core/common-types';
-import { Channel, Sender } from './types';
+import { Channel, MessageFormModel, Sender } from './types';
 
 class ChatService {
   static channelsCollection = firebaseDb.collection(DbCollection.channels);
@@ -15,7 +15,7 @@ class ChatService {
     return result;
   }
 
-  static createMessage(content: string) {
+  static createMessage(content: string): MessageFormModel {
     const currentUser = firebaseAuth.currentUser!;
     const sender: Sender = {
       id: currentUser.uid,
