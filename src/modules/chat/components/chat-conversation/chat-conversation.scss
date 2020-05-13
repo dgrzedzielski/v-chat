@@ -20,7 +20,7 @@
   }
 
   &__messages-list-container {
-    max-height: calc(var(--conversation-height) - 160px);
+    max-height: calc(var(--conversation-height) - 160px); // height of conversation card - (height of form + height of header)
     overflow-y: auto;
     scrollbar-width: thin;
     scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);

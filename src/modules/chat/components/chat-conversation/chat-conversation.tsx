@@ -20,9 +20,6 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 }) => {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [newMessageContent, setNewMessageContent] = React.useState('');
-  const headerRef = React.useRef<HTMLElement>(null);
-  const containerRef = React.useRef<HTMLElement>(null);
-  const formRef = React.useRef<HTMLDivElement>(null);
   const { t } = useTranslation();
 
   const handleMessagesChange = React.useCallback((snapshot) => {
@@ -67,8 +64,8 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   return (
     <>
-      <Card className="chat-conversation" ref={containerRef}>
-        <header className="chat-conversation__header" ref={headerRef}>
+      <Card className="chat-conversation">
+        <header className="chat-conversation__header">
           <Typography variant="h6" component="h3">
             {`#${currentChannel.name}`}
           </Typography>
@@ -89,7 +86,7 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
             <ChatMessages messages={messages} />
           )}
           <Divider />
-          <div className="chat-conversation__form-container" ref={formRef}>
+          <div className="chat-conversation__form-container">
             <BaseForm onSubmit={sendMessage} withoutErrors>
               <BaseFormInput
                 autoFocus

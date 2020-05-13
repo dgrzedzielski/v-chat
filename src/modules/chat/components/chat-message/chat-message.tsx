@@ -15,18 +15,15 @@ import './chat-message.scss';
 
 type ChatMessageProps = {
   message: Message;
-  rightAligned?: boolean;
-  style?: React.CSSProperties;
 };
 
 const ChatMessage: React.FC<ChatMessageProps> = ({
   message: { createdAtTimestamp, content, sender },
-  style,
 }) => {
   const { user } = useAuth();
+  const createdAt = createdAtTimestamp.toDate();
 
   const formattedCreatedAt = React.useMemo(() => {
-    const createdAt = createdAtTimestamp.toDate();
     const time = asStandardTimeFormat(createdAt);
 
     if (isToday(createdAt)) {
@@ -34,13 +31,13 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
     }
 
     return `${asStandardDateFormat(createdAt)} ${time}`;
-  }, [createdAtTimestamp]);
+  }, [createdAt]);
 
   const isSentByCurrentUser = user!.uid === sender.id;
 
   return (
     <>
-      <ListItem style={style} className="chat-message__container">
+      <ListItem className="chat-message__container">
         <div
           className={clsx('chat-message', {
             'chat-message--left': !isSentByCurrentUser,
@@ -60,7 +57,7 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
             className="chat-message__created-at"
             color="textSecondary"
           >
-            <time dateTime={new Date().toLocaleTimeString()}>
+            <time dateTime={createdAt.toLocaleTimeString()}>
               {formattedCreatedAt}
             </time>
           </Typography>
