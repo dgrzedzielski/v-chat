@@ -16,7 +16,7 @@ type AuthViewProps = {
   submitAction: (
     email: string,
     password: string
-  ) => Promise<firebase.auth.UserCredential>;
+  ) => Promise<firebase.auth.UserCredential | void>;
 };
 
 const AuthView: React.FC<AuthViewProps> = ({
