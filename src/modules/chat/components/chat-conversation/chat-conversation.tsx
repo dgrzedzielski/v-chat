@@ -82,11 +82,15 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
         <Divider />
         <CardContent className="chat-conversation__content">
           {messages.length === 0 ? (
-            <Typography variant="body1">{t('chat.noMessages')}</Typography>
+            <Typography
+              variant="body1"
+              className="chat-conversation__no-messages-info"
+            >
+              {t('chat.noMessages')}
+            </Typography>
           ) : (
             <ChatMessages messages={messages} />
           )}
-          <Divider />
           <div className="chat-conversation__form-container">
             <BaseForm onSubmit={sendMessage} withoutErrors>
               <BaseFormInput

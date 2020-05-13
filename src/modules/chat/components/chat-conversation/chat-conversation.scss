@@ -47,9 +47,14 @@
     bottom: 0;
     width: 100%;
     padding: spacing(2);
+    border-top: var(--border);
   }
 
   &__input {
     margin: 0;
+  }
+
+  &__no-messages-info {
+    padding: spacing(3);
   }
 }
