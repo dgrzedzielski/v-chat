@@ -39,7 +39,7 @@ const BaseForm: React.FC<BaseFormProps> = ({
       {error && (
         <div className="base-form__error">
           <Typography variant="body1" color="error">
-            {t(error)}
+            {t(`errors.${error}`)}
           </Typography>
         </div>
       )}

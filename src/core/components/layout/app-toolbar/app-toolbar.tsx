@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import IconButton from '@material-ui/core/IconButton';
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
@@ -15,13 +16,15 @@ const AppToolbar: React.FC<AppToolbarProps> = ({
   toggleDrawer,
   showDrawerToggle = false,
 }) => {
+  const { t } = useTranslation();
+
   return (
     <AppBar position="fixed" className="app-toolbar" elevation={3}>
       <Toolbar>
         {showDrawerToggle && (
           <IconButton
             color="inherit"
-            aria-label="open drawer"
+            aria-label={t('common.openDrawer')}
             edge="start"
             onClick={toggleDrawer}
             className="app-toolbar__toggle-drawer"
