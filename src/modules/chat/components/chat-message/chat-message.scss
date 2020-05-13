@@ -1,6 +1,8 @@
 @import 'scss/lib';
 
 .chat-message {
+  $root: &;
+
   display: flex;
   align-items: flex-start;
   position: relative;
@@ -32,34 +34,32 @@
     opacity: 1;
   }
 
-  &--left &__content {
-    &::before {
+  &--left {
+    #{$root}__content::before {
       @include triangle(left, var(--chat-color), 5px);
       right: 100%;
     }
-  }
 
-  &--left &__created-at {
-    left: 4px;
+    #{$root}__created-at {
+      left: 4px;
+    }
   }
 
   &--right {
     flex-direction: row-reverse;
     margin-left: auto;
-  }
 
-  &--right &__content {
-    &::before {
+    #{$root}__content::before {
       @include triangle(right, var(--chat-color), 5px);
       left: 100%;
     }
-  }
 
-  &--right &__avatar {
-    margin-left: auto;
-  }
+    #{$root}__avatar {
+      margin-left: auto;
+    }
 
-  &--right &__created-at {
-    right: 4px;
+    #{$root}__created-at {
+      right: 4px;
+    }
   }
 }
