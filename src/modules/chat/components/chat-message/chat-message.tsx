@@ -21,7 +21,9 @@ const ChatMessage: React.FC<ChatMessageProps> = ({
   message: { createdAtTimestamp, content, sender },
 }) => {
   const { user } = useAuth();
-  const createdAt = createdAtTimestamp.toDate();
+  const createdAt = React.useMemo(() => createdAtTimestamp.toDate(), [
+    createdAtTimestamp,
+  ]);
 
   const formattedCreatedAt = React.useMemo(() => {
     const time = asStandardTimeFormat(createdAt);

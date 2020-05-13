@@ -11,6 +11,8 @@ import ChatService from 'modules/chat/chat-service';
 import ChatMessages from 'modules/chat/components/chat-messages';
 import './chat-conversation.scss';
 
+type DocumentMessageChange = firebase.firestore.DocumentChange<Message>;
+
 type ChatConversationProps = {
   currentChannel: Channel;
 };
@@ -23,16 +25,15 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
   const { t } = useTranslation();
 
   const handleMessagesChange = React.useCallback((snapshot) => {
-    setMessages(
-      snapshot.docs.map((doc: firebase.firestore.DocumentData) => {
-        const data = doc.data() as Message;
+    const newData = snapshot
+      .docChanges()
+      .filter(({ type }: DocumentMessageChange) => type === 'added')
+      .map((change: DocumentMessageChange) => ({
+        ...change.doc.data(),
+        id: change.doc.id,
+      }));
 
-        return {
-          ...data,
-          id: doc.id,
-        };
-      })
-    );
+    setMessages((currentMessages) => currentMessages.concat(newData));
   }, []);
 
   const subscribeForMessageChanges = React.useCallback(() => {
