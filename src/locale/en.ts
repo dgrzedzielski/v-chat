@@ -2,6 +2,7 @@ export default {
   common: {
     openDrawer: 'Open drawer',
     submit: 'Submit',
+    logout: 'Logout',
   },
 
   errors: {

@@ -1,9 +1,14 @@
 @import 'scss/lib';
 
 .app-toolbar {
-  @include mq(md) {
-    width: calc(100% - var(--drawer-width));
-    margin-left: var(--drawer-width);
+  display: flex;
+  justify-content: space-between;
+
+  &__container {
+    @include mq(md) {
+      width: calc(100% - var(--drawer-width));
+      margin-left: var(--drawer-width);
+    }
   }
 
   &__toggle-drawer {

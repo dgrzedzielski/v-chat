@@ -13,6 +13,10 @@ class AuthService {
   static async updateProfile(data: UpdateProfileModel) {
     return firebaseAuth.currentUser?.updateProfile(data);
   }
+
+  static logout() {
+    return firebaseAuth.signOut();
+  }
 }
 
 export default AuthService;
