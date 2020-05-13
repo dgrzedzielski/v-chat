@@ -1,5 +1,6 @@
 import React from 'react';
-import { Hidden, Drawer } from '@material-ui/core';
+import Hidden from '@material-ui/core/Hidden';
+import Drawer from '@material-ui/core/Drawer';
 import { Children } from 'core/common-types';
 import './app-drawer.scss';
 

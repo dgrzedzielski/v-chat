@@ -9,9 +9,9 @@ import {
   asStandardDateFormat,
   asStandardTimeFormat,
 } from 'core/utils/date-utils';
-import './chat-message.scss';
 import { useAuth } from 'modules/auth/auth-context';
 import { Message } from 'modules/chat/types';
+import './chat-message.scss';
 
 type ChatMessageProps = {
   message: Message;
