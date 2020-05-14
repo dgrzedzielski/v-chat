@@ -5,14 +5,13 @@ import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import List from '@material-ui/core/List';
 import BaseForm from 'core/components/form/base-form';
 import BaseFormInput from 'core/components/form/base-form-input';
-import { Channel, Message } from 'modules/chat/types';
-import ChatService from 'modules/chat/chat-service';
-import ChatMessages from 'modules/chat/components/chat-messages';
+import { Channel } from 'modules/chat/types';
+import ChatMessage from 'modules/chat/components/chat-message';
+import { useChannelMessages } from 'modules/chat/hooks/use-channel-messages';
 import './chat-conversation.scss';
-
-type DocumentMessageChange = firebase.firestore.DocumentChange<Message>;
 
 type ChatConversationProps = {
   currentChannel: Channel;
@@ -21,55 +20,15 @@ type ChatConversationProps = {
 const ChatConversation: React.FC<ChatConversationProps> = ({
   currentChannel,
 }) => {
-  const [messages, setMessages] = React.useState<Message[]>([]);
-  const [newMessageContent, setNewMessageContent] = React.useState('');
-  const [loading, setLoading] = React.useState(false);
+  const {
+    messagesListRef,
+    loading,
+    messages,
+    sendMessage,
+    newMessageContent,
+    setNewMessageContent,
+  } = useChannelMessages(currentChannel);
   const { t } = useTranslation();
-
-  const handleMessagesChange = React.useCallback((snapshot) => {
-    const newData = snapshot
-      .docChanges()
-      .filter(({ type }: DocumentMessageChange) => type === 'added')
-      .map((change: DocumentMessageChange) => ({
-        ...change.doc.data(),
-        id: change.doc.id,
-      }));
-
-    setMessages((currentMessages) => currentMessages.concat(newData));
-    setLoading(false);
-  }, []);
-
-  const subscribeForMessageChanges = React.useCallback(() => {
-    return ChatService.channelsCollection
-      .doc(currentChannel.name)
-      .collection('messages')
-      .orderBy('createdAtTimestamp')
-      .limit(100)
-      .onSnapshot(handleMessagesChange);
-  }, [currentChannel, handleMessagesChange]);
-
-  React.useEffect(() => {
-    setLoading(true);
-    setMessages([]);
-  }, [currentChannel.name]);
-
-  React.useEffect(() => {
-    const unsubscribe = subscribeForMessageChanges();
-
-    return () => unsubscribe();
-  }, [subscribeForMessageChanges]);
-
-  const sendMessage = React.useCallback(async () => {
-    if (newMessageContent.length === 0) return;
-
-    try {
-      await ChatService.sendMessage(currentChannel.name, newMessageContent);
-    } catch (e) {
-      // TODO HANDLE ERROR
-      // setError(e.message);
-    }
-    setNewMessageContent('');
-  }, [newMessageContent, currentChannel]);
 
   const conversationContent = React.useMemo(() => {
     if (loading) {
@@ -91,8 +50,16 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
       );
     }
 
-    return <ChatMessages messages={messages} />;
-  }, [messages, loading, t]);
+    return (
+      <div className="chat-conversation__messages-list-container">
+        <List ref={messagesListRef}>
+          {messages.map((message) => (
+            <ChatMessage message={message} key={message.id} />
+          ))}
+        </List>
+      </div>
+    );
+  }, [loading, messages, messagesListRef, t]);
 
   return (
     <>
