@@ -16,6 +16,8 @@ export const useChannelMessages = (currentChannel: Channel) => {
     messagesListRef,
     scrollListToBottom,
     updateScrolledState,
+    error,
+    setError,
   } = useMessages();
 
   const handleMessagesChange = React.useCallback(
@@ -64,15 +66,15 @@ export const useChannelMessages = (currentChannel: Channel) => {
       await ChatService.sendMessage(currentChannel.name, newMessageContent);
       scrollListToBottom();
     } catch (e) {
-      // TODO HANDLE ERROR
-      // setError(e.message);
+      setError('errors.chat/sending-message');
     }
     setNewMessageContent('');
   }, [
     newMessageContent,
+    setNewMessageContent,
     currentChannel.name,
     scrollListToBottom,
-    setNewMessageContent,
+    setError,
   ]);
 
   return {
@@ -82,5 +84,7 @@ export const useChannelMessages = (currentChannel: Channel) => {
     loading,
     newMessageContent,
     setNewMessageContent,
+    error,
+    setError,
   };
 };

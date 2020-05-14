@@ -13,6 +13,7 @@ export default {
     'auth/weak-password': 'Password is too weak',
     'auth/too-many-requests':
       'You reached out requests limit, wait a moment and try again',
+    'chat/sending-message': 'Error while sending message. Try again',
   },
 
   auth: {

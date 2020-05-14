@@ -5,6 +5,7 @@ export const useMessages = () => {
   const [messages, setMessages] = React.useState<Message[]>([]);
   const [newMessageContent, setNewMessageContent] = React.useState('');
   const [loading, setLoading] = React.useState(false);
+  const [error, setError] = React.useState<null | string>(null);
   const [isScrolledToBottom, setIsScrolledToBottom] = React.useState(false);
   const messagesListRef = React.useRef<HTMLUListElement>(null);
 
@@ -54,5 +55,7 @@ export const useMessages = () => {
     isScrolledToBottom,
     updateScrolledState,
     scrollListToBottom,
+    error,
+    setError,
   };
 };

@@ -12,6 +12,8 @@ import { Channel } from 'modules/chat/types';
 import ChatMessage from 'modules/chat/components/chat-message';
 import { useChannelMessages } from 'modules/chat/hooks/use-channel-messages';
 import './chat-conversation.scss';
+import Snackbar from '@material-ui/core/Snackbar';
+import { Alert } from '@material-ui/lab';
 
 type ChatConversationProps = {
   currentChannel: Channel;
@@ -27,6 +29,8 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
     sendMessage,
     newMessageContent,
     setNewMessageContent,
+    error,
+    setError,
   } = useChannelMessages(currentChannel);
   const { t } = useTranslation();
 
@@ -63,6 +67,16 @@ const ChatConversation: React.FC<ChatConversationProps> = ({
 
   return (
     <>
+      <Snackbar
+        open={error !== null}
+        autoHideDuration={6000}
+        onClose={() => setError(null)}
+        anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+      >
+        <Alert onClose={() => setError(null)} severity="error">
+          {t(error!)}
+        </Alert>
+      </Snackbar>
       <Card className="chat-conversation">
         <header className="chat-conversation__header">
           <Typography variant="h6" component="h3">
