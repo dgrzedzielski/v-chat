@@ -21,6 +21,7 @@
     "object-curly-spacing": ["warn", "always"],
     "import/prefer-default-export": "off",
     "array-callback-return": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "jsx-a11y/label-has-associated-control":  "off" // it's stupid and does not recognize react htmlFor
   }
 }

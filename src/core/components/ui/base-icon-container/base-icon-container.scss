@@ -1,0 +1,10 @@
+.base-icon-container {
+  &--primary {
+    background: var(--primary);
+  }
+
+  &--secondary {
+    background: var(--secondary);
+    color: var(--text-primary);
+  }
+}

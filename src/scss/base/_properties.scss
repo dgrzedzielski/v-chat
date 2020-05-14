@@ -3,7 +3,25 @@
   --primary: #03a9f4; //lightBlue
   --secondary: #7c4dff; // deepPurple[A200]
 
+  --border-color: rgba(255, 255, 255, 0.1);
+  --border: 1px solid var(--border-color);
+
   --text-primary: var(--white);
   --text-secondary: rgba(255, 255, 255, 0.7);
+
+  --scrollbar-track-bg: rgba(0, 0, 0, 0);
+  --scrollbar-thumb-bg: rgba(255, 255, 255, 0.05);
+  --scrollbar-thumb-border-color: var(--border-color);
+
+  --drawer-width: 250px;
+  --toolbar-min-height: 56px;
+
+  @media (min-width: 0px) and (orientation: landscape) {
+    --toolbar-min-height: 48px;
+  }
+
+  @include mq(sm) {
+    --toolbar-min-height: 64px;
+  }
 }
 

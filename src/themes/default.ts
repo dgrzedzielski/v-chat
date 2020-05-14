@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core';
+import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { deepPurple, lightBlue } from '@material-ui/core/colors';
 
 const theme = createMuiTheme({
@@ -8,6 +8,7 @@ const theme = createMuiTheme({
     secondary: {
       main: deepPurple.A200,
     },
+    divider: 'rgba(255, 255, 255, 0.1)',
   },
 });
 

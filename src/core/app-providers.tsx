@@ -1,11 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { ThemeProvider, CssBaseline } from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import { ThemeProvider } from '@material-ui/core/styles';
 import { AuthProvider } from 'modules/auth/auth-context';
 import defaultTheme from 'themes/default';
 
 type AppProvidersProps = {
-  children: React.ReactChild
+  children: React.ReactChild;
 };
 
 export const AppProviders: React.FC<AppProvidersProps> = ({ children }) => (

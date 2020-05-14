@@ -1,5 +1,9 @@
 .view {
   min-height: 100%;
+
+  &--centered {
+    @include flex-center;
+  }
 }
 
 .img {

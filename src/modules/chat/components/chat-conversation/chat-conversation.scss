@@ -1,0 +1,67 @@
+@import 'scss/lib';
+
+.chat-conversation {
+  --chat-color: var(--secondary);
+  --conversation-height: 100vh - var(--toolbar-min-height) - #{spacing(6)};
+
+  height: calc(var(--conversation-height));
+  position: relative;
+
+  &__header {
+    padding: spacing(2, 3);
+  }
+
+  &__content {
+    padding: spacing(0, 0, 12);
+  }
+
+  &__messages-list {
+    padding: 0;
+  }
+
+  &__messages-list-container {
+    max-height: calc(var(--conversation-height) - 160px); // height of conversation card - (height of form + height of header)
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-thumb-bg) var(--scrollbar-track-bg);
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: var(--scrollbar-track-bg);
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--scrollbar-thumb-bg) ;
+      border-radius: 6px;
+      border: 1px solid var(--scrollbar-thumb-border-color);
+    }
+
+  }
+
+  &__form-container {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    padding: spacing(2);
+    border-top: var(--border);
+  }
+
+  &__input {
+    margin: 0;
+  }
+
+  &__no-messages-info {
+    padding: spacing(3);
+  }
+
+  &__loader-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+  }
+}

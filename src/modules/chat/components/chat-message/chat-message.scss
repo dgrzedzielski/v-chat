@@ -1,0 +1,54 @@
+@import 'scss/lib';
+
+.chat-message {
+  $root: &;
+
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+
+  &__container {
+    padding: spacing(1, 2);
+  }
+
+  &__content {
+    position: relative;
+    background: var(--chat-color);
+    padding: 6px 16px;
+    border-radius: 10px;
+
+    &::before {
+      position: absolute;
+      top: 12px;
+    }
+  }
+
+  &__avatar-container {
+    min-width: 44px;
+  }
+
+  &__avatar {
+    @include square(spacing(4));
+  }
+
+  &--left {
+    #{$root}__content::before {
+      @include triangle(left, var(--chat-color), 5px);
+      right: 100%;
+    }
+  }
+
+  &--right {
+    flex-direction: row-reverse;
+    margin-left: auto;
+
+    #{$root}__content::before {
+      @include triangle(right, var(--chat-color), 5px);
+      left: 100%;
+    }
+
+    #{$root}__avatar {
+      margin-left: auto;
+    }
+  }
+}
